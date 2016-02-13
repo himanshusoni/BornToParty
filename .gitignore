@@ -9,3 +9,8 @@ gradle-app.setting
 
 # Cache of project
 .gradletasknamecache
+
+# Android Studio
+local.properties
+.idea/*
+BornToParty.iml
