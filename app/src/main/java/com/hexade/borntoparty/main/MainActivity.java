@@ -1,5 +1,6 @@
 package com.hexade.borntoparty.main;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,6 +17,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 import com.hexade.borntoparty.main.dummy.DummyContent;
 
 import java.util.EventListener;
@@ -24,7 +27,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         BirthdayFragment.OnBirthdayListFragmentInteractionListener,
         RemindersFragment.OnRemindersListFragmentInteractionListener,
-        EventsFragment.OnEventsListFragmentInteractionListener{
+        EventsFragment.OnEventsListFragmentInteractionListener,
+        FacebookLoginFragment.OnFacebookLoginFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +37,20 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        FacebookSdk.sdkInitialize(getApplicationContext());
+
         setTitle("Birthday");
         // load the first pages - default - birthdayFragment
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.flContent, new BirthdayFragment()).commit();
+
+        try {
+            // load login on some condition
+            fragmentManager.beginTransaction().replace(R.id.flContent, FacebookLoginFragment.class.newInstance()).commit();
+            // load birthday on some condition
+//        fragmentManager.beginTransaction().replace(R.id.flContent, BirthdayFragment.class.newInstance()).commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -129,6 +143,22 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Logs 'install' and 'app activate' App Events.
+        AppEventsLogger.activateApp(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        // Logs 'app deactivate' App Event.
+        AppEventsLogger.deactivateApp(this);
+    }
+
+    @Override
     public void onBirthdayListFragmentInteraction(DummyContent.DummyItem item) {
 
     }
@@ -140,6 +170,11 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onRemindersListFragmentInteraction(DummyContent.DummyItem item) {
+
+    }
+
+    @Override
+    public void onFacebookLoginFragmentInteraction(Uri uri) {
 
     }
 }
