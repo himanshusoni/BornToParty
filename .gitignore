@@ -15,3 +15,6 @@ gradle-app.setting
 local.properties
 .idea/*
 BornToParty.iml
+
+# Ignore this file from MAC
+.DS_Store
