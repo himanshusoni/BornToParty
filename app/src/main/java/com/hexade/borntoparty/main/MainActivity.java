@@ -73,7 +73,8 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_add) {
+            // open a modal to enter the username to add new Friend;
             return true;
         }
 
@@ -99,15 +100,21 @@ public class MainActivity extends AppCompatActivity
 
         Class fragmentClass;
         switch(item.getItemId()) {
-            case R.id.nav_camera:
+            case R.id.nav_birthdays:
                 fragmentClass = BirthdayFragment.class;
                 break;
-            case R.id.nav_gallery:
+            case R.id.nav_events:
                 fragmentClass = EventsFragment.class;
                 break;
-            case R.id.nav_slideshow:
+            case R.id.nav_reminders:
                 fragmentClass = RemindersFragment.class;
                 break;
+            /*case R.id.nav_friends:
+                // TODO open a new Activity
+                break;
+            case R.id.nav_settings:
+                // TODO open a new Activity
+                break;*/
             default:
                 fragmentClass = BirthdayFragment.class;
         }
