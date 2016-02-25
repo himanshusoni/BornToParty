@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hexade.borntoparty.main.RemindersFragment.OnRemindersListFragmentInteractionListener;
-import com.hexade.borntoparty.main.dummy.DummyContent.DummyItem;
+import com.hexade.borntoparty.main.dummy.DummyReminder.DummyItem;
 
 import java.util.List;
 

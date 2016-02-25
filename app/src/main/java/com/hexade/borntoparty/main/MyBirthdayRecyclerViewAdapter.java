@@ -7,8 +7,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hexade.borntoparty.main.BirthdayFragment.OnBirthdayListFragmentInteractionListener;
-import com.hexade.borntoparty.main.dummy.DummyContent.DummyItem;
+import com.hexade.borntoparty.main.dummy.DummyBirthday.DummyItem;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -37,7 +39,13 @@ public class MyBirthdayRecyclerViewAdapter extends RecyclerView.Adapter<MyBirthd
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mUsernameView.setText(mValues.get(position).name);
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(mValues.get(position).birthday);
+        String mDate = new SimpleDateFormat("MMMM d").format(cal.getTime());
+
+        holder.mBirthdayView.setText(mDate);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,19 +67,21 @@ public class MyBirthdayRecyclerViewAdapter extends RecyclerView.Adapter<MyBirthd
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
-        public final TextView mContentView;
+        public final TextView mUsernameView;
+        public final TextView mBirthdayView;
         public DummyItem mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
             mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mUsernameView = (TextView) view.findViewById(R.id.username);
+            mBirthdayView = (TextView) view.findViewById(R.id.birthday);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mUsernameView.getText() + " '" + mBirthdayView.getText()+ "'";
         }
     }
 }

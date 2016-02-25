@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hexade.borntoparty.main.EventsFragment.OnEventsListFragmentInteractionListener;
-import com.hexade.borntoparty.main.dummy.DummyContent.DummyItem;
+import com.hexade.borntoparty.main.dummy.DummyEvent.DummyItem;
 
 import java.util.List;
 

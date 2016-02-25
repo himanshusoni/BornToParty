@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.hexade.borntoparty.main.dummy.DummyContent;
-import com.hexade.borntoparty.main.dummy.DummyContent.DummyItem;
+import com.hexade.borntoparty.main.dummy.DummyReminder;
+import com.hexade.borntoparty.main.dummy.DummyReminder.DummyItem;
 
 import java.util.List;
 
@@ -71,7 +71,7 @@ public class RemindersFragment extends Fragment {
             }
 
             recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
-            recyclerView.setAdapter(new MyRemindersRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new MyRemindersRecyclerViewAdapter(DummyReminder.ITEMS, mListener));
         }
         return view;
     }

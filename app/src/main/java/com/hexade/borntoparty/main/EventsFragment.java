@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.hexade.borntoparty.main.dummy.DummyContent;
-import com.hexade.borntoparty.main.dummy.DummyContent.DummyItem;
+import com.hexade.borntoparty.main.dummy.DummyEvent;
+import com.hexade.borntoparty.main.dummy.DummyEvent.DummyItem;
 
 import java.util.List;
 
@@ -71,7 +71,7 @@ public class EventsFragment extends Fragment {
             }
 
             recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
-            recyclerView.setAdapter(new MyEventsRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new MyEventsRecyclerViewAdapter(DummyEvent.ITEMS, mListener));
         }
         return view;
     }

@@ -10,10 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.hexade.borntoparty.main.dummy.DummyContent;
-import com.hexade.borntoparty.main.dummy.DummyContent.DummyItem;
-
-import java.util.List;
+import com.hexade.borntoparty.main.dummy.DummyBirthday;
 
 /**
  * A fragment representing a list of Items.
@@ -71,7 +68,7 @@ public class BirthdayFragment extends Fragment {
             }
 
             recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
-            recyclerView.setAdapter(new MyBirthdayRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new MyBirthdayRecyclerViewAdapter(DummyBirthday.ITEMS, mListener));
         }
         return view;
     }
@@ -106,6 +103,6 @@ public class BirthdayFragment extends Fragment {
      */
     public interface OnBirthdayListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onBirthdayListFragmentInteraction(DummyItem item);
+        void onBirthdayListFragmentInteraction(DummyBirthday.DummyItem item);
     }
 }

@@ -1,5 +1,7 @@
 package com.hexade.borntoparty.main;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,7 +18,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.hexade.borntoparty.main.dummy.DummyContent;
+import com.hexade.borntoparty.main.dummy.DummyBirthday;
+import com.hexade.borntoparty.main.dummy.DummyEvent;
+import com.hexade.borntoparty.main.dummy.DummyReminder;
 
 import java.util.EventListener;
 
@@ -25,6 +29,12 @@ public class MainActivity extends AppCompatActivity
         BirthdayFragment.OnBirthdayListFragmentInteractionListener,
         RemindersFragment.OnRemindersListFragmentInteractionListener,
         EventsFragment.OnEventsListFragmentInteractionListener{
+
+    /**
+     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
+     * device.
+     */
+    private boolean mTwoPane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +56,14 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        if (findViewById(R.id.item_detail_container) != null) {
+            // The detail container view will be present only in the
+            // large-screen layouts (res/values-w900dp).
+            // If this view is present, then the
+            // activity should be in two-pane mode.
+            mTwoPane = true;
+        }
     }
 
     @Override
@@ -136,17 +154,60 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onBirthdayListFragmentInteraction(DummyContent.DummyItem item) {
+    public void onBirthdayListFragmentInteraction(DummyBirthday.DummyItem item) {
+        if (mTwoPane) {
+            Bundle arguments = new Bundle();
+            arguments.putString(ItemDetailFragment.ARG_ITEM_ID, item.id);
+            ItemDetailFragment fragment = new ItemDetailFragment();
+            fragment.setArguments(arguments);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.item_detail_container, fragment)
+                    .commit();
+        } else {
+            Context context = getApplicationContext();
+            Intent intent = new Intent(context, ItemDetailActivity.class);
+            intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, item.id);
+
+            context.startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onEventsListFragmentInteraction(DummyEvent.DummyItem item) {
+        if (mTwoPane) {
+            Bundle arguments = new Bundle();
+            arguments.putString(ItemDetailFragment.ARG_ITEM_ID, item.id);
+            ItemDetailFragment fragment = new ItemDetailFragment();
+            fragment.setArguments(arguments);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.item_detail_container, fragment)
+                    .commit();
+        } else {
+            Context context = getApplicationContext();
+            Intent intent = new Intent(context, ItemDetailActivity.class);
+            intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, item.id);
+
+            context.startActivity(intent);
+        }
 
     }
 
     @Override
-    public void onEventsListFragmentInteraction(DummyContent.DummyItem item) {
+    public void onRemindersListFragmentInteraction(DummyReminder.DummyItem item) {
+        if (mTwoPane) {
+            Bundle arguments = new Bundle();
+            arguments.putString(ItemDetailFragment.ARG_ITEM_ID, item.id);
+            ItemDetailFragment fragment = new ItemDetailFragment();
+            fragment.setArguments(arguments);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.item_detail_container, fragment)
+                    .commit();
+        } else {
+            Context context = getApplicationContext();
+            Intent intent = new Intent(context, ItemDetailActivity.class);
+            intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, item.id);
 
-    }
-
-    @Override
-    public void onRemindersListFragmentInteraction(DummyContent.DummyItem item) {
-
+            context.startActivity(intent);
+        }
     }
 }
