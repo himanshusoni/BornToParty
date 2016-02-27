@@ -158,15 +158,16 @@ public class MainActivity extends AppCompatActivity
         if (mTwoPane) {
             Bundle arguments = new Bundle();
             arguments.putString(ItemDetailFragment.ARG_ITEM_ID, item.id);
-            ItemDetailFragment fragment = new ItemDetailFragment();
+            BirthdayDetailFragment fragment = new BirthdayDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.item_detail_container, fragment)
                     .commit();
         } else {
             Context context = getApplicationContext();
-            Intent intent = new Intent(context, ItemDetailActivity.class);
+            Intent intent = new Intent(context, BirthdayDetailActivity.class);
             intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, item.id);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             context.startActivity(intent);
         }
@@ -186,6 +187,7 @@ public class MainActivity extends AppCompatActivity
             Context context = getApplicationContext();
             Intent intent = new Intent(context, ItemDetailActivity.class);
             intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, item.id);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             context.startActivity(intent);
         }
@@ -194,6 +196,10 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onRemindersListFragmentInteraction(DummyReminder.DummyItem item) {
+        /**
+         * TODO show group with the options, - Bash, Wish, Ignore in detail.
+         * The view will update based on the selected Option.
+        */
         if (mTwoPane) {
             Bundle arguments = new Bundle();
             arguments.putString(ItemDetailFragment.ARG_ITEM_ID, item.id);
@@ -206,6 +212,7 @@ public class MainActivity extends AppCompatActivity
             Context context = getApplicationContext();
             Intent intent = new Intent(context, ItemDetailActivity.class);
             intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, item.id);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             context.startActivity(intent);
         }

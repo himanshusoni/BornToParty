@@ -41,11 +41,7 @@ public class MyBirthdayRecyclerViewAdapter extends RecyclerView.Adapter<MyBirthd
         holder.mIdView.setText(mValues.get(position).id);
         holder.mUsernameView.setText(mValues.get(position).name);
 
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(mValues.get(position).birthday);
-        String mDate = new SimpleDateFormat("MMMM d").format(cal.getTime());
-
-        holder.mBirthdayView.setText(mDate);
+        holder.mBirthdayView.setText(mValues.get(position).getFormattedDate());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

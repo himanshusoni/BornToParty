@@ -2,6 +2,7 @@ package com.hexade.borntoparty.main.dummy;
 
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -128,6 +129,12 @@ public class DummyBirthday {
             this.username = data[0];
             this.name = data[1];
             this.birthday = new Date(data[2]);
+        }
+
+        public String getFormattedDate(){
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(this.birthday);
+            return new SimpleDateFormat("MMMM d").format(cal.getTime());
         }
 
         @Override
