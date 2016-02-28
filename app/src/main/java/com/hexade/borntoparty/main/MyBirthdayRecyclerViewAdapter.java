@@ -1,16 +1,19 @@
 package com.hexade.borntoparty.main;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hexade.borntoparty.main.BirthdayFragment.OnBirthdayListFragmentInteractionListener;
 import com.hexade.borntoparty.main.dummy.DummyBirthday.DummyItem;
+import com.hexade.borntoparty.main.models.Users;
+import com.squareup.picasso.Picasso;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -20,12 +23,14 @@ import java.util.List;
  */
 public class MyBirthdayRecyclerViewAdapter extends RecyclerView.Adapter<MyBirthdayRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<Users.User> mValues;
     private final OnBirthdayListFragmentInteractionListener mListener;
+    private final Context mContext;
 
-    public MyBirthdayRecyclerViewAdapter(List<DummyItem> items, OnBirthdayListFragmentInteractionListener listener) {
+    public MyBirthdayRecyclerViewAdapter(Context context, List<Users.User> items, OnBirthdayListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
+        mContext = context;
     }
 
     @Override
@@ -38,10 +43,17 @@ public class MyBirthdayRecyclerViewAdapter extends RecyclerView.Adapter<MyBirthd
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mUsernameView.setText(mValues.get(position).name);
+//        holder.mIdView.setText(mValues.get(position).id);
 
-        holder.mBirthdayView.setText(mValues.get(position).getFormattedDate());
+        Picasso.with(mContext).load(mValues.get(position).getThumbnail()).skipMemoryCache().into(holder.mThumbnail);
+
+        holder.mUsernameView.setText(mValues.get(position).getFullName());
+        holder.mBirthdayView.setText(mValues.get(position).getFormattedDob());
+        holder.mDaysLeftView.setText(mValues.get(position).getDaysLeft()+ " days");
+        holder.mNewAgeView.setText("Turns " + (mValues.get(position).getAge() + 1));
+
+        Log.i("API", " Data : " + position + ", " + mValues.get(position).getDaysLeft() + " , " + (mValues.get(position).getAge() + 1) + ", " + mValues.get(position).getDob());
+//      Picasso.with(mContext).load(mValues.get(position).getThumbnail()).transform(new ScaleToFitWidhtHeigthTransform(mRowHeight, true)).skipMemoryCache().into(holder.image);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,17 +74,26 @@ public class MyBirthdayRecyclerViewAdapter extends RecyclerView.Adapter<MyBirthd
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
+        public final ImageView mThumbnail;
+//        public final TextView mIdView;
         public final TextView mUsernameView;
         public final TextView mBirthdayView;
-        public DummyItem mItem;
+        public final TextView mDaysLeftView;
+        public final TextView mNewAgeView;
+
+        public Users.User mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
+//            mIdView = (TextView) view.findViewById(R.id.id);
+            mThumbnail = (ImageView) view.findViewById(R.id.thumbnail);
             mUsernameView = (TextView) view.findViewById(R.id.username);
             mBirthdayView = (TextView) view.findViewById(R.id.birthday);
+
+
+            mDaysLeftView = (TextView) view.findViewById(R.id.daysleft);
+            mNewAgeView = (TextView) view.findViewById(R.id.age);
         }
 
         @Override

@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import com.hexade.borntoparty.main.dummy.DummyBirthday;
 import com.hexade.borntoparty.main.dummy.DummyEvent;
 import com.hexade.borntoparty.main.dummy.DummyReminder;
+import com.hexade.borntoparty.main.models.Users;
 
 import java.util.EventListener;
 
@@ -154,10 +155,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onBirthdayListFragmentInteraction(DummyBirthday.DummyItem item) {
+    public void onBirthdayListFragmentInteraction(Users.User item) {
         if (mTwoPane) {
             Bundle arguments = new Bundle();
-            arguments.putString(ItemDetailFragment.ARG_ITEM_ID, item.id);
+            arguments.putString(BirthdayDetailFragment.ARG_ITEM_ID, item.getUsername());
             BirthdayDetailFragment fragment = new BirthdayDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
@@ -166,7 +167,7 @@ public class MainActivity extends AppCompatActivity
         } else {
             Context context = getApplicationContext();
             Intent intent = new Intent(context, BirthdayDetailActivity.class);
-            intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, item.id);
+            intent.putExtra(BirthdayDetailFragment.ARG_ITEM_ID, item.getUsername());
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             context.startActivity(intent);
