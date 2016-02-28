@@ -7,10 +7,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hexade.borntoparty.main.dummy.DummyBirthday;
 import com.hexade.borntoparty.main.dummy.DummyContent;
+import com.hexade.borntoparty.main.models.Users;
 
 /**
  * A fragment representing a single Item detail screen.
@@ -28,7 +30,7 @@ public class BirthdayDetailFragment extends Fragment {
     /**
      * The dummy content this fragment is presenting.
      */
-    private DummyBirthday.DummyItem mItem;
+    private Users.User mItem;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -45,12 +47,13 @@ public class BirthdayDetailFragment extends Fragment {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
-            mItem = DummyBirthday.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+            mItem = Users.getUserMap().get(getArguments().getString(ARG_ITEM_ID));
 
             Activity activity = this.getActivity();
             CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {
-                appBarLayout.setTitle(mItem.content);
+//                appBarLayout.setTitle(mItem.content);
+                ImageView backdrop = (ImageView)appBarLayout.findViewById(R.id.main_backdrop);
             }
         }
     }
@@ -62,8 +65,10 @@ public class BirthdayDetailFragment extends Fragment {
 
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.item_detail)).setText(mItem.id + " " + mItem.name);
-            ((TextView) rootView.findViewById(R.id.item_date)).setText(mItem.getFormattedDate());
+            ((TextView) rootView.findViewById(R.id.item_detail)).setText(mItem.getFullName());
+            ((TextView) rootView.findViewById(R.id.item_date)).setText(mItem.getFormattedDob());
+            ((TextView) rootView.findViewById(R.id.daysandage)).setText("Turns " + (mItem.getAge()+1) + " in "  + mItem.getDaysLeft() + " days!");
+            ((TextView) rootView.findViewById(R.id.phone)).setText(mItem.getPhone()+"\n"+mItem.getCell()+"\n"+mItem.getEmail());
         }
 
         return rootView;

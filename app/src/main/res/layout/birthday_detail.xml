@@ -20,7 +20,18 @@
         android:padding="16dp"
         android:text="Birth Date"
         android:textIsSelectable="true" />
+
     <TextView
+        android:id="@+id/daysandage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:lineSpacingExtra="8dp"
+        android:text="Turns 100 in 10 days!"
+        android:padding="@dimen/activity_horizontal_margin" />
+
+    <TextView
+        android:id="@+id/phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
@@ -39,7 +50,7 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Send Message"
+        android:text="Send Wishes"
         android:id="@+id/button_send_message"
         android:layout_margin="@dimen/text_margin"
         android:layout_gravity="center_horizontal" />
