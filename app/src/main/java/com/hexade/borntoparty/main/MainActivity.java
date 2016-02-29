@@ -37,10 +37,15 @@ public class MainActivity extends AppCompatActivity
      */
     private boolean mTwoPane;
 
+    public static Context myAppContext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        myAppContext = getApplicationContext();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -196,14 +201,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onRemindersListFragmentInteraction(DummyReminder.DummyItem item) {
+    public void onRemindersListFragmentInteraction(Users.User item) {
         /**
          * TODO show group with the options, - Bash, Wish, Ignore in detail.
          * The view will update based on the selected Option.
         */
-        if (mTwoPane) {
+        /*if (mTwoPane) {
             Bundle arguments = new Bundle();
-            arguments.putString(ItemDetailFragment.ARG_ITEM_ID, item.id);
+            arguments.putString(ItemDetailFragment.ARG_ITEM_ID, item.getUsername());
             ItemDetailFragment fragment = new ItemDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
@@ -212,10 +217,10 @@ public class MainActivity extends AppCompatActivity
         } else {
             Context context = getApplicationContext();
             Intent intent = new Intent(context, ItemDetailActivity.class);
-            intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, item.id);
+            intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, item.getUsername());
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             context.startActivity(intent);
-        }
+        }*/
     }
 }

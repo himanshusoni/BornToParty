@@ -43,7 +43,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Set Reminder"
-        android:id="@+id/button"
+        android:id="@+id/set_reminder"
         android:layout_margin="@dimen/text_margin"
         android:layout_gravity="center_horizontal" />
 
@@ -51,7 +51,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Send Wishes"
-        android:id="@+id/button_send_message"
+        android:id="@+id/send_wishes"
         android:layout_margin="@dimen/text_margin"
         android:layout_gravity="center_horizontal" />
 

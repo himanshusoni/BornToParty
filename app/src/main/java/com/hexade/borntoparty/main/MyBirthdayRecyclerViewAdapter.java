@@ -10,14 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hexade.borntoparty.main.BirthdayFragment.OnBirthdayListFragmentInteractionListener;
-import com.hexade.borntoparty.main.dummy.DummyBirthday.DummyItem;
 import com.hexade.borntoparty.main.models.Users;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link Users.User} and makes a call to the
  * specified {@link OnBirthdayListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */

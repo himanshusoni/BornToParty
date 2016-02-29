@@ -7,12 +7,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.hexade.borntoparty.main.Utils.DataManager;
 import com.hexade.borntoparty.main.dummy.DummyBirthday;
 import com.hexade.borntoparty.main.dummy.DummyContent;
 import com.hexade.borntoparty.main.models.Users;
+import com.squareup.picasso.Picasso;
 
 /**
  * A fragment representing a single Item detail screen.
@@ -54,6 +58,7 @@ public class BirthdayDetailFragment extends Fragment {
             if (appBarLayout != null) {
 //                appBarLayout.setTitle(mItem.content);
                 ImageView backdrop = (ImageView)appBarLayout.findViewById(R.id.main_backdrop);
+                Picasso.with(getActivity()).load(mItem.getLargePicture()).skipMemoryCache().into(backdrop);
             }
         }
     }
@@ -69,6 +74,18 @@ public class BirthdayDetailFragment extends Fragment {
             ((TextView) rootView.findViewById(R.id.item_date)).setText(mItem.getFormattedDob());
             ((TextView) rootView.findViewById(R.id.daysandage)).setText("Turns " + (mItem.getAge()+1) + " in "  + mItem.getDaysLeft() + " days!");
             ((TextView) rootView.findViewById(R.id.phone)).setText(mItem.getPhone()+"\n"+mItem.getCell()+"\n"+mItem.getEmail());
+
+            Button btnSetReminder = (Button) rootView.findViewById(R.id.set_reminder);
+            Button btnSendWishes = (Button) rootView.findViewById(R.id.set_reminder);
+
+            btnSetReminder.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    new DataManager(MainActivity.myAppContext).setReminder(mItem.getUsername());
+                    Toast.makeText(getActivity(),"Reminder set for "+mItem.getFullName(),Toast.LENGTH_SHORT).show();
+                }
+            });
         }
 
         return rootView;

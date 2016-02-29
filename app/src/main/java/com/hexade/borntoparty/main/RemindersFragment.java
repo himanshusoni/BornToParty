@@ -6,13 +6,22 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.hexade.borntoparty.main.dummy.DummyReminder;
 import com.hexade.borntoparty.main.dummy.DummyReminder.DummyItem;
+import com.hexade.borntoparty.main.models.Reminders;
+import com.hexade.borntoparty.main.models.Users;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -63,7 +72,7 @@ public class RemindersFragment extends Fragment {
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            final RecyclerView recyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
@@ -71,7 +80,42 @@ public class RemindersFragment extends Fragment {
             }
 
             recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
-            recyclerView.setAdapter(new MyRemindersRecyclerViewAdapter(DummyReminder.ITEMS, mListener));
+//            recyclerView.setAdapter(new MyRemindersRecyclerViewAdapter(DummyReminder.ITEMS, mListener));
+
+            final Users users = new Users();
+            users.fetch(Users.URL, new Callback() {
+                @Override
+                public void onFailure(Request request, IOException e) {
+
+                }
+
+                @Override
+                public void onResponse(Response response) throws IOException {
+                    final String responseString = response.body().string();
+                    if (response.isSuccessful()) {
+                        // Do what you want to do with the response.
+                        Log.i("API - SUCCESS", responseString);
+
+                        ArrayList<Users.User> list = users.createUsers(responseString);
+                        Log.i("REMINDERS", " list size " + list.size());
+                        final Reminders reminders = new Reminders();
+
+                        // Always run the View update on the main/UI Thread
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                            recyclerView.setAdapter(new MyRemindersRecyclerViewAdapter(getActivity(), reminders.fetchReminders(MainActivity.myAppContext, users), mListener));
+                            }
+                        });
+
+                    } else {
+                        // Request not successful
+                        Log.i("API - ERROR", responseString);
+                    }
+                }
+            });
+
         }
         return view;
     }
@@ -106,6 +150,6 @@ public class RemindersFragment extends Fragment {
      */
     public interface OnRemindersListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onRemindersListFragmentInteraction(DummyItem item);
+        void onRemindersListFragmentInteraction(Users.User item);
     }
 }

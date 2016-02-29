@@ -18,6 +18,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
@@ -136,7 +138,20 @@ public class Users {
 //            return null;
         }
 
+        if(userList.size()!=0){
+            Collections.sort(userList, getComparator());
+        }
+
         return userList;
+    }
+
+    public Comparator<User> getComparator(){
+        return new Comparator<User>() {
+            @Override
+            public int compare(User lhs, User rhs) {
+                return lhs.getDaysLeft() - rhs.getDaysLeft();
+            }
+        };
     }
 
     public class User{
