@@ -11,11 +11,19 @@
         <!--android:text="def_text"-->
         <!--android:textAppearance="?attr/textAppearanceListItem"-->
         <!--android:gravity="center" />-->
-    <ImageView
+
+    <!--<ImageView
         android:layout_width="@dimen/list_thumbnail_dimension"
         android:layout_height="@dimen/list_thumbnail_dimension"
         android:layout_margin="@dimen/text_margin"
-        android:id="@+id/thumbnail" />
+        android:id="@+id/thumbnail" />-->
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/thumbnail"
+        android:layout_width="@dimen/list_thumbnail_dimension"
+        android:layout_height="@dimen/list_thumbnail_dimension"
+        android:layout_margin="@dimen/text_margin"
+        android:layout_gravity="center_vertical" />
 
     <LinearLayout
         android:orientation="vertical"

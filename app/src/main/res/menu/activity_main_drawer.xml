@@ -20,6 +20,10 @@
     <item android:title="Communicate">
         <menu>
             <item
+                android:id="@+id/nav_invites"
+                android:icon="@drawable/ic_menu_whatshot"
+                android:title="Invites" />
+            <item
                 android:id="@+id/nav_friends"
                 android:icon="@drawable/ic_menu_people"
                 android:title="Friends" />

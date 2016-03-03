@@ -1,12 +1,16 @@
 package com.hexade.borntoparty.main;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -222,5 +226,42 @@ public class MainActivity extends AppCompatActivity
 
             context.startActivity(intent);
         }*/
+
+        final Users.User userItem = item;
+
+        DialogFragment reminderFragment = new DialogFragment() {
+            public String[] reminderActions =  new String[]{"Wish","Plan a Bash","Ignore"};
+
+            @Override
+            public Dialog onCreateDialog(Bundle savedInstanceState) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Choose an Action")
+                        .setItems(reminderActions, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // The 'which' argument contains the index position
+                                // of the selected item
+                                Log.i("REMINDER", reminderActions[which]);
+
+                                Context context = getApplicationContext();
+                                switch (which){
+                                    case 0:
+                                        break;
+                                    case 1:{
+                                        Intent intent = new Intent(context, CreateEventActivity.class);
+                                        intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, userItem.getUsername());
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
+                                    }
+                                        break;
+                                    case 2:
+                                        break;
+                                }
+                            }
+                        });
+                return builder.create();
+            }
+        };
+
+        reminderFragment.show(getSupportFragmentManager(), "RemindersFragment");
     }
 }
