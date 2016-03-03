@@ -23,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.hexade.borntoparty.main.dummy.DummyBirthday;
+import com.hexade.borntoparty.main.dummy.DummyContent;
 import com.hexade.borntoparty.main.dummy.DummyEvent;
 import com.hexade.borntoparty.main.dummy.DummyReminder;
 import com.hexade.borntoparty.main.models.Users;
@@ -33,7 +34,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         BirthdayFragment.OnBirthdayListFragmentInteractionListener,
         RemindersFragment.OnRemindersListFragmentInteractionListener,
-        EventsFragment.OnEventsListFragmentInteractionListener{
+        EventsFragment.OnEventsListFragmentInteractionListener,
+        InviteFragment.OnInviteListFragmentInteractionListener{
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -137,6 +139,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_reminders:
                 fragmentClass = RemindersFragment.class;
                 break;
+            case R.id.nav_invites:
+                fragmentClass = InviteFragment.class;
+                break;
             /*case R.id.nav_friends:
                 // TODO open a new Activity
                 break;
@@ -229,7 +234,7 @@ public class MainActivity extends AppCompatActivity
 
         final Users.User userItem = item;
 
-        DialogFragment reminderFragment = new DialogFragment() {
+        DialogFragment reminderDialogFragment = new DialogFragment() {
             public String[] reminderActions =  new String[]{"Wish","Plan a Bash","Ignore"};
 
             @Override
@@ -262,6 +267,39 @@ public class MainActivity extends AppCompatActivity
             }
         };
 
-        reminderFragment.show(getSupportFragmentManager(), "RemindersFragment");
+        reminderDialogFragment.show(getSupportFragmentManager(), "RemindersFragment");
+    }
+
+    @Override
+    public void onInviteListFragmentInteraction(DummyContent.DummyItem item) {
+        DialogFragment reminderDialogFragment = new DialogFragment() {
+            public String[] inviteActions =  new String[]{"Yes","No","May be","Later"};
+
+            @Override
+            public Dialog onCreateDialog(Bundle savedInstanceState) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Send a Response")
+                        .setItems(inviteActions, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // The 'which' argument contains the index position
+                                // of the selected item
+                                Log.i("INVITE", inviteActions[which]);
+
+                                switch (which){
+                                    case 0:
+                                        break;
+                                    case 1:
+                                        break;
+                                    case 2:
+                                        break;
+                                    default:
+                                }
+                            }
+                        });
+                return builder.create();
+            }
+        };
+
+        reminderDialogFragment.show(getSupportFragmentManager(), "RemindersFragment");
     }
 }
