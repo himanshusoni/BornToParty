@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <!--<TextView-->
+        <!--android:id="@+id/id"-->
+        <!--android:layout_width="@dimen/list_avatar_width"-->
+        <!--android:layout_height="fill_parent"-->
+        <!--android:text="def_text"-->
+        <!--android:textAppearance="?attr/textAppearanceListItem"-->
+        <!--android:gravity="center" />-->
+
+    <!--<ImageView
+        android:layout_width="@dimen/list_thumbnail_dimension"
+        android:layout_height="@dimen/list_thumbnail_dimension"
+        android:layout_margin="@dimen/text_margin"
+        android:id="@+id/thumbnail" />-->
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/thumbnail"
+        android:layout_width="@dimen/list_thumbnail_dimension"
+        android:layout_height="@dimen/list_thumbnail_dimension"
+        android:layout_margin="@dimen/text_margin"
+        android:layout_gravity="center_vertical" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="4" >
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/text_margin"
+            android:text="def_text"
+            android:textAppearance="?attr/textAppearanceListItem" />
+
+        <TextView
+            android:id="@+id/birthday"
+            android:gravity="right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/text_margin"
+            android:text="def_text"
+            android:textAppearance="?attr/textAppearanceListItem" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:layout_weight="4"
+        android:gravity="right">
+
+        <TextView
+            android:id="@+id/daysleft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="45 days" />
+
+        <TextView
+            android:id="@+id/age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Turns 30" />
+    </LinearLayout>
+
+</LinearLayout>

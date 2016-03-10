@@ -1,0 +1,58 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context="com.hexade.borntoparty.main.ItemDetailFragment">
+    <TextView
+        android:id="@+id/item_detail"
+        style="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:text="Name"
+        android:textIsSelectable="true" />
+    <TextView
+        android:id="@+id/item_date"
+        style="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:text="Birth Date"
+        android:textIsSelectable="true" />
+
+    <TextView
+        android:id="@+id/daysandage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:lineSpacingExtra="8dp"
+        android:text="Turns 100 in 10 days!"
+        android:padding="@dimen/activity_horizontal_margin" />
+
+    <TextView
+        android:id="@+id/phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:lineSpacingExtra="8dp"
+        android:text="@string/lorem"
+        android:padding="@dimen/activity_horizontal_margin" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Set Reminder"
+        android:id="@+id/set_reminder"
+        android:layout_margin="@dimen/text_margin"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Send Wishes"
+        android:id="@+id/send_wishes"
+        android:layout_margin="@dimen/text_margin"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>
