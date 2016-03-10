@@ -35,9 +35,9 @@ public class MyEventsRecyclerViewAdapter extends RecyclerView.Adapter<MyEventsRe
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+//        holder.mItem = mValues.get(position);
+//        holder.mIdView.setText(mValues.get(position).id);
+//        holder.mContentView.setText(mValues.get(position).content);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +53,7 @@ public class MyEventsRecyclerViewAdapter extends RecyclerView.Adapter<MyEventsRe
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return mValues.size()/5;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -33,7 +33,6 @@ import java.util.EventListener;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         BirthdayFragment.OnBirthdayListFragmentInteractionListener,
-        RemindersFragment.OnRemindersListFragmentInteractionListener,
         EventsFragment.OnEventsListFragmentInteractionListener,
         InviteFragment.OnInviteListFragmentInteractionListener{
 
@@ -136,9 +135,6 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_events:
                 fragmentClass = EventsFragment.class;
                 break;
-            case R.id.nav_reminders:
-                fragmentClass = RemindersFragment.class;
-                break;
             case R.id.nav_invites:
                 fragmentClass = InviteFragment.class;
                 break;
@@ -190,7 +186,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onEventsListFragmentInteraction(DummyEvent.DummyItem item) {
-        if (mTwoPane) {
+        /*if (mTwoPane) {
             Bundle arguments = new Bundle();
             arguments.putString(ItemDetailFragment.ARG_ITEM_ID, item.id);
             ItemDetailFragment fragment = new ItemDetailFragment();
@@ -198,76 +194,14 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.item_detail_container, fragment)
                     .commit();
-        } else {
+        } else {*/
             Context context = getApplicationContext();
-            Intent intent = new Intent(context, ItemDetailActivity.class);
-            intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, item.id);
+            Intent intent = new Intent(context, EventDetailActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             context.startActivity(intent);
-        }
+//        }
 
-    }
-
-    @Override
-    public void onRemindersListFragmentInteraction(Users.User item) {
-        /**
-         * TODO show group with the options, - Bash, Wish, Ignore in detail.
-         * The view will update based on the selected Option.
-        */
-        /*if (mTwoPane) {
-            Bundle arguments = new Bundle();
-            arguments.putString(ItemDetailFragment.ARG_ITEM_ID, item.getUsername());
-            ItemDetailFragment fragment = new ItemDetailFragment();
-            fragment.setArguments(arguments);
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.item_detail_container, fragment)
-                    .commit();
-        } else {
-            Context context = getApplicationContext();
-            Intent intent = new Intent(context, ItemDetailActivity.class);
-            intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, item.getUsername());
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-            context.startActivity(intent);
-        }*/
-
-        final Users.User userItem = item;
-
-        DialogFragment reminderDialogFragment = new DialogFragment() {
-            public String[] reminderActions =  new String[]{"Wish","Plan a Bash","Ignore"};
-
-            @Override
-            public Dialog onCreateDialog(Bundle savedInstanceState) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Choose an Action")
-                        .setItems(reminderActions, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // The 'which' argument contains the index position
-                                // of the selected item
-                                Log.i("REMINDER", reminderActions[which]);
-
-                                Context context = getApplicationContext();
-                                switch (which){
-                                    case 0:
-                                        break;
-                                    case 1:{
-                                        Intent intent = new Intent(context, CreateEventActivity.class);
-                                        intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, userItem.getUsername());
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        startActivity(intent);
-                                    }
-                                        break;
-                                    case 2:
-                                        break;
-                                }
-                            }
-                        });
-                return builder.create();
-            }
-        };
-
-        reminderDialogFragment.show(getSupportFragmentManager(), "RemindersFragment");
     }
 
     @Override

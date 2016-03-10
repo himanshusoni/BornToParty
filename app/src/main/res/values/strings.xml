@@ -30,4 +30,5 @@
 		<!--aliquet quis orci. Curabitur maximus augue ut bibendum sagittis.-->
     </string>
     <string name="title_activity_create_event">CreateEventActivity</string>
+    <string name="title_activity_event_detail">EventDetailActivity</string>
 </resources>
