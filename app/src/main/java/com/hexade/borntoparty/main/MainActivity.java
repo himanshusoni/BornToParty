@@ -4,37 +4,34 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
-import android.view.View;
-import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.hexade.borntoparty.main.dummy.DummyBirthday;
 import com.hexade.borntoparty.main.dummy.DummyContent;
 import com.hexade.borntoparty.main.dummy.DummyEvent;
-import com.hexade.borntoparty.main.dummy.DummyReminder;
 import com.hexade.borntoparty.main.models.Users;
-
-import java.util.EventListener;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         BirthdayFragment.OnBirthdayListFragmentInteractionListener,
         EventsFragment.OnEventsListFragmentInteractionListener,
-        InviteFragment.OnInviteListFragmentInteractionListener{
+        InviteFragment.OnInviteListFragmentInteractionListener,
+        HomeFragment.OnFragmentInteractionListener{
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -43,6 +40,11 @@ public class MainActivity extends AppCompatActivity
     private boolean mTwoPane;
 
     public static Context myAppContext;
+
+    /**
+     * The {@link ViewPager} that will host the section contents.
+     */
+    private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +56,11 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        setTitle("Birthday");
-        // load the first pages - default - birthdayFragment
+//        setTitle("Birthday");
+//         load the first pages - default - birthdayFragment
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.flContent, new BirthdayFragment()).commit();
-
+        fragmentManager.beginTransaction().replace(R.id.flContent, new HomeFragment()).commit();
+//
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -129,12 +131,12 @@ public class MainActivity extends AppCompatActivity
 
         Class fragmentClass;
         switch(item.getItemId()) {
-            case R.id.nav_birthdays:
-                fragmentClass = BirthdayFragment.class;
+            case R.id.nav_home:
+                fragmentClass = HomeFragment.class;
                 break;
-            case R.id.nav_events:
+            /*case R.id.nav_events:
                 fragmentClass = EventsFragment.class;
-                break;
+                break;*/
             case R.id.nav_invites:
                 fragmentClass = InviteFragment.class;
                 break;
@@ -145,7 +147,7 @@ public class MainActivity extends AppCompatActivity
                 // TODO open a new Activity
                 break;*/
             default:
-                fragmentClass = BirthdayFragment.class;
+                fragmentClass = HomeFragment.class;
         }
 
         try {
@@ -236,4 +238,54 @@ public class MainActivity extends AppCompatActivity
 
         reminderDialogFragment.show(getSupportFragmentManager(), "RemindersFragment");
     }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
+/*    private void setupViewPager(ViewPager viewPager) {
+        SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(BirthdayFragment.newInstance(0), "Birthdays");
+        adapter.addFragment(EventsFragment.newInstance(1), "Events");
+
+        viewPager.setAdapter(adapter);
+    }
+
+    *//**
+     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+     * one of the sections/tabs/pages.
+     *//*
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+        private final List<Fragment> mFragments = new ArrayList<>();
+        private final List<String> mFragmentTitles = new ArrayList<>();
+
+        public SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragments.add(fragment);
+            mFragmentTitles.add(title);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            // getItem is called to instantiate the fragment for the given page.
+            // Return a PlaceholderFragment (defined as a static inner class below).
+
+            return mFragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragments.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitles.get(position);
+        }
+    }*/
 }
