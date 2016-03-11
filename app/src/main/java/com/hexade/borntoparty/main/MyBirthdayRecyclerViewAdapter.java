@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.hexade.borntoparty.main.BirthdayFragment.OnBirthdayListFragmentInteractionListener;
+import com.hexade.borntoparty.main.UI.Fragments.BirthdayFragment.OnBirthdayListFragmentInteractionListener;
 import com.hexade.borntoparty.main.models.Users;
 import com.squareup.picasso.Picasso;
 

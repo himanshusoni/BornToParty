@@ -9,5 +9,5 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context="com.hexade.borntoparty.main.EventsFragment"
+    tools:context=".UI.Fragments.EventsFragment"
     tools:listitem="@layout/fragment_events" />
