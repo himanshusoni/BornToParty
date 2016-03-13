@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.hexade.borntoparty.main.EventsFragment.OnEventsListFragmentInteractionListener;
+import com.hexade.borntoparty.main.UI.Fragments.EventsFragment.OnEventsListFragmentInteractionListener;
 import com.hexade.borntoparty.main.dummy.DummyEvent.DummyItem;
 
 import java.util.List;
