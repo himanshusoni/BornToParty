@@ -48,4 +48,6 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <string name="API_URL">http://192.168.0.2:3000/</string>
 </resources>

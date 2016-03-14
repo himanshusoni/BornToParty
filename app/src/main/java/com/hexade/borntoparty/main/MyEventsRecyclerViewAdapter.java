@@ -7,21 +7,23 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hexade.borntoparty.main.UI.Fragments.EventsFragment.OnEventsListFragmentInteractionListener;
-import com.hexade.borntoparty.main.dummy.DummyEvent.DummyItem;
+import com.hexade.borntoparty.main.models.Event;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link Event} and makes a call to the
  * specified {@link OnEventsListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class MyEventsRecyclerViewAdapter extends RecyclerView.Adapter<MyEventsRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<Event> mValues;
     private final OnEventsListFragmentInteractionListener mListener;
 
-    public MyEventsRecyclerViewAdapter(List<DummyItem> items, OnEventsListFragmentInteractionListener listener) {
+    public MyEventsRecyclerViewAdapter(List<Event> items, OnEventsListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -35,9 +37,23 @@ public class MyEventsRecyclerViewAdapter extends RecyclerView.Adapter<MyEventsRe
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-//        holder.mItem = mValues.get(position);
-//        holder.mIdView.setText(mValues.get(position).id);
-//        holder.mContentView.setText(mValues.get(position).content);
+        holder.mItem = mValues.get(position);
+        holder.mIdView.setText(mValues.get(position).getName());
+        holder.mContentView.setText(mValues.get(position).getFormattedEventDate());
+
+        HashMap<String, String> inviteMap = mValues.get(position).getInviteStatus();
+        int coming = 0;
+        int notComing = 0;
+        int mayBe = 0;
+
+        for(Map.Entry<String,String> es: inviteMap.entrySet()){
+            if(es.getValue().equals("coming"))
+                coming++;
+            else if(es.getValue().equals("not coming"))
+                notComing++;
+            else
+                mayBe++; // this counts the 'invite sent status too'
+        }
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,14 +69,14 @@ public class MyEventsRecyclerViewAdapter extends RecyclerView.Adapter<MyEventsRe
 
     @Override
     public int getItemCount() {
-        return mValues.size()/5;
+        return mValues.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public Event mItem;
 
         public ViewHolder(View view) {
             super(view);

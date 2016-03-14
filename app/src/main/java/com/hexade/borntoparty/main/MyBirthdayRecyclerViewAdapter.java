@@ -10,23 +10,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hexade.borntoparty.main.UI.Fragments.BirthdayFragment.OnBirthdayListFragmentInteractionListener;
+import com.hexade.borntoparty.main.models.Friend;
+import com.hexade.borntoparty.main.models.User;
 import com.hexade.borntoparty.main.models.Users;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link Users.User} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link Friend} and makes a call to the
  * specified {@link OnBirthdayListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class MyBirthdayRecyclerViewAdapter extends RecyclerView.Adapter<MyBirthdayRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Users.User> mValues;
+    private final List<User> mValues;
     private final OnBirthdayListFragmentInteractionListener mListener;
     private final Context mContext;
 
-    public MyBirthdayRecyclerViewAdapter(Context context, List<Users.User> items, OnBirthdayListFragmentInteractionListener listener) {
+    public MyBirthdayRecyclerViewAdapter(Context context, List<User> items, OnBirthdayListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
         mContext = context;
@@ -41,17 +43,17 @@ public class MyBirthdayRecyclerViewAdapter extends RecyclerView.Adapter<MyBirthd
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
+        holder.mItem = mValues.get(position).getFriend();
 //        holder.mIdView.setText(mValues.get(position).id);
 
-        Picasso.with(mContext).load(mValues.get(position).getThumbnail()).skipMemoryCache().into(holder.mThumbnail);
+        Picasso.with(mContext).load(holder.mItem.getPicture().getThumbnail()).skipMemoryCache().into(holder.mThumbnail);
 
-        holder.mUsernameView.setText(mValues.get(position).getFullName());
-        holder.mBirthdayView.setText(mValues.get(position).getFormattedDob());
-        holder.mDaysLeftView.setText(mValues.get(position).getDaysLeft()+ " days");
-        holder.mNewAgeView.setText("Turns " + (mValues.get(position).getAge() + 1));
+        holder.mUsernameView.setText(holder.mItem.getName().getFullName());
+        holder.mBirthdayView.setText(holder.mItem.getFormattedDob());
+        holder.mDaysLeftView.setText(holder.mItem.getDaysLeft()+ " days");
+        holder.mNewAgeView.setText("Turns " + (holder.mItem.getAge() + 1));
 
-        Log.i("API", " Data : " + position + ", " + mValues.get(position).getDaysLeft() + " , " + (mValues.get(position).getAge() + 1) + ", " + mValues.get(position).getDob());
+        Log.i("API", " Data : " + position + ", " + holder.mItem.getDaysLeft() + " , " + (holder.mItem.getAge() + 1) + ", " + holder.mItem.getFormattedDob());
 //      Picasso.with(mContext).load(mValues.get(position).getThumbnail()).transform(new ScaleToFitWidhtHeigthTransform(mRowHeight, true)).skipMemoryCache().into(holder.image);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -80,7 +82,7 @@ public class MyBirthdayRecyclerViewAdapter extends RecyclerView.Adapter<MyBirthd
         public final TextView mDaysLeftView;
         public final TextView mNewAgeView;
 
-        public Users.User mItem;
+        public Friend mItem;
 
         public ViewHolder(View view) {
             super(view);

@@ -30,6 +30,8 @@ import com.hexade.borntoparty.main.UI.Fragments.HomeFragment;
 import com.hexade.borntoparty.main.UI.Fragments.InviteFragment;
 import com.hexade.borntoparty.main.dummy.DummyContent;
 import com.hexade.borntoparty.main.dummy.DummyEvent;
+import com.hexade.borntoparty.main.models.Event;
+import com.hexade.borntoparty.main.models.Friend;
 import com.hexade.borntoparty.main.models.Users;
 
 public class MainActivity extends AppCompatActivity
@@ -173,7 +175,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onBirthdayListFragmentInteraction(Users.User item) {
+    public void onBirthdayListFragmentInteraction(Friend item) {
         if (mTwoPane) {
             Bundle arguments = new Bundle();
             arguments.putString(BirthdayDetailFragment.ARG_ITEM_ID, item.getUsername());
@@ -193,7 +195,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onEventsListFragmentInteraction(DummyEvent.DummyItem item) {
+    public void onEventsListFragmentInteraction(Event item) {
         /*if (mTwoPane) {
             Bundle arguments = new Bundle();
             arguments.putString(ItemDetailFragment.ARG_ITEM_ID, item.id);

@@ -2,12 +2,12 @@ package com.hexade.borntoparty.main.models;
 
 import android.util.Log;
 
-import com.squareup.okhttp.Call;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
+//import com.squareup.okhttp.Call;
+//import com.squareup.okhttp.Callback;
+//import com.squareup.okhttp.MediaType;
+//import com.squareup.okhttp.OkHttpClient;
+//import com.squareup.okhttp.Request;
+//import com.squareup.okhttp.Response;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,7 +28,7 @@ import java.util.concurrent.TimeUnit;
  * Created by himanshusoni on 2/27/16.
  */
 public class Users {
-
+/*
     private static final String TAG_RESULTS = "results";
     private static final String TAG_USER = "user";
     private static final String TAG_USERNAME = "username";
@@ -44,9 +44,9 @@ public class Users {
     private static final String TAG_PICTURE_MEDIUM = "medium";
     private static final String TAG_PICTURE_THUMBNAIL = "thumbnail";
 
-    /**
+    *//**
      * using seed returns the same set of results for the seed string.
-     */
+     *//*
     public final static String URL = "http://api.randomuser.me/?seed=sonihimanshu&results=10";
 
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -306,5 +306,5 @@ public class Users {
                 Log.i("API - ERROR", responseString);
             }
         }
-    }
+    }*/
 }

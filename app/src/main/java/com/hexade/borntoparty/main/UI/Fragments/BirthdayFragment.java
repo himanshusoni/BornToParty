@@ -11,15 +11,36 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
+import com.hexade.borntoparty.main.BTPApi;
 import com.hexade.borntoparty.main.DividerItemDecoration;
 import com.hexade.borntoparty.main.MyBirthdayRecyclerViewAdapter;
 import com.hexade.borntoparty.main.R;
+import com.hexade.borntoparty.main.models.Friend;
+import com.hexade.borntoparty.main.models.FriendsWrapper;
+import com.hexade.borntoparty.main.models.User;
 import com.hexade.borntoparty.main.models.Users;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
+//import com.squareup.okhttp.Callback;
+//import com.squareup.okhttp.Request;
+//import com.squareup.okhttp.Response;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.Collections;
+
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+import retrofit.converter.GsonConverter;
 
 /**
  * A fragment representing a list of Items.
@@ -79,34 +100,51 @@ public class BirthdayFragment extends Fragment {
             recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
             Log.i("API", "In BirthdayFragment, onCreateView");
 
-            final Users users = new Users();
-            users.fetch(Users.URL, new Callback() {
-                @Override
-                public void onFailure(Request request, IOException e) {
-
-                }
+            JsonDeserializer js = new JsonDeserializer() {
 
                 @Override
-                public void onResponse(Response response) throws IOException {
-                    final String responseString = response.body().string();
-                    if (response.isSuccessful()) {
-                        // Do what you want to do with the response.
-                        Log.i("API - SUCCESS", responseString);
+                public Object deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                    JsonObject content = json.getAsJsonObject();
+                    FriendsWrapper message = new Gson().fromJson(json, typeOfT);
+                    JsonElement data = content.get("user");
 
-                        // Always run the View update on the main/UI Thread
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                recyclerView.setAdapter(new MyBirthdayRecyclerViewAdapter(getActivity(), users.createUsers(responseString), mListener));
-                            }
-                        });
-
-                    } else {
-                        // Request not successful
-                        Log.i("API - ERROR", responseString);
+                    for(User u : message.getResult()){
+                        Friend f = u.getFriend();
+                        f.setDob(f.getDob());
                     }
+
+                    if(message.getResult().size()!=0){
+                        Collections.sort(message.getResult(), message.getComparator());
+                    }
+
+                    return message;
                 }
-            });
+            };
+
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gsonBuilder.registerTypeAdapter(FriendsWrapper.class, js);
+            Gson gson = gsonBuilder.create();
+
+            RestAdapter restAdapter = new RestAdapter.Builder()
+                    .setEndpoint(getString(R.string.API_URL))
+                    .setConverter(new GsonConverter(gson))
+                    .build();
+            BTPApi methods = restAdapter.create(BTPApi.class);
+            Callback<FriendsWrapper> callback = new Callback<FriendsWrapper>() {
+                @Override
+                public void success(FriendsWrapper f, Response response) {
+                    Log.i("HIM",f.getLength() + "");
+                    recyclerView.setAdapter(new MyBirthdayRecyclerViewAdapter(getActivity(), f.getResult() , mListener));
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+                    Log.e("HIM",retrofitError.getMessage());
+                    retrofitError.printStackTrace();
+
+                }
+            };
+            methods.getFriends("crazysnake682", callback);
 
 //            new Users().fetch();
         }
@@ -143,6 +181,6 @@ public class BirthdayFragment extends Fragment {
      */
     public interface OnBirthdayListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onBirthdayListFragmentInteraction(Users.User item);
+        void onBirthdayListFragmentInteraction(Friend item);
     }
 }

@@ -6,14 +6,45 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.reflect.TypeToken;
+import com.hexade.borntoparty.main.BTPApi;
+import com.hexade.borntoparty.main.MyBirthdayRecyclerViewAdapter;
 import com.hexade.borntoparty.main.MyEventsRecyclerViewAdapter;
 import com.hexade.borntoparty.main.R;
 import com.hexade.borntoparty.main.dummy.DummyEvent;
 import com.hexade.borntoparty.main.dummy.DummyEvent.DummyItem;
+import com.hexade.borntoparty.main.models.Event;
+import com.hexade.borntoparty.main.models.EventsWrapper;
+import com.hexade.borntoparty.main.models.Friend;
+import com.hexade.borntoparty.main.models.FriendsWrapper;
+import com.hexade.borntoparty.main.models.User;
+
+import org.json.JSONArray;
+
+import java.lang.reflect.Type;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+import retrofit.converter.GsonConverter;
 
 /**
  * A fragment representing a list of Items.
@@ -63,7 +94,7 @@ public class EventsFragment extends Fragment {
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            final RecyclerView recyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
@@ -71,7 +102,52 @@ public class EventsFragment extends Fragment {
             }
 
             //recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
-            recyclerView.setAdapter(new MyEventsRecyclerViewAdapter(DummyEvent.ITEMS, mListener));
+
+            JsonDeserializer js = new JsonDeserializer() {
+
+                @Override
+                public Object deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                    JsonObject content = json.getAsJsonObject();
+                    EventsWrapper message = new Gson().fromJson(json, typeOfT);
+
+                    int i = 0;
+                    for(Event e : message.getResult()){
+                        e.seteDate(new Date()); // this will ignore this parameter and the date using local eventDate variable
+                    }
+
+                    if(message.getResult().size()!=0){
+                        Collections.sort(message.getResult(), message.getComparator());
+                    }
+
+                    return message;
+                }
+            };
+
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gsonBuilder.registerTypeAdapter(EventsWrapper.class, js);
+            Gson gson = gsonBuilder.create();
+
+            RestAdapter restAdapter = new RestAdapter.Builder()
+                    .setEndpoint(getString(R.string.API_URL))
+                    .setConverter(new GsonConverter(gson))
+                    .build();
+            BTPApi methods = restAdapter.create(BTPApi.class);
+            Callback<EventsWrapper> callback = new Callback<EventsWrapper>() {
+                @Override
+                public void success(EventsWrapper e, Response response) {
+                    Log.i("HIM", e.getLength() + "");
+//                    recyclerView.setAdapter(new MyBirthdayRecyclerViewAdapter(getActivity(), f.getResult() , mListener));
+                    recyclerView.setAdapter(new MyEventsRecyclerViewAdapter(e.getResult(), mListener));
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+                    Log.e("HIM",retrofitError.getMessage());
+                    retrofitError.printStackTrace();
+
+                }
+            };
+            methods.getGetEvents("crazysnake682", callback);
         }
         return view;
     }
@@ -106,6 +182,6 @@ public class EventsFragment extends Fragment {
      */
     public interface OnEventsListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onEventsListFragmentInteraction(DummyItem item);
+        void onEventsListFragmentInteraction(Event item);
     }
 }
