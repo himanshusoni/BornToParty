@@ -6,8 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.hexade.borntoparty.main.UI.Fragments.InviteFragment;
 import com.hexade.borntoparty.main.dummy.DummyContent.DummyItem;
-import com.hexade.borntoparty.main.InviteFragment.OnInviteListFragmentInteractionListener;
+import com.hexade.borntoparty.main.UI.Fragments.InviteFragment.OnInviteListFragmentInteractionListener;
 
 import java.util.List;
 

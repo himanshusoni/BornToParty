@@ -1,4 +1,4 @@
-package com.hexade.borntoparty.main;
+package com.hexade.borntoparty.main.UI.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,6 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.hexade.borntoparty.main.DividerItemDecoration;
+import com.hexade.borntoparty.main.MyBirthdayRecyclerViewAdapter;
+import com.hexade.borntoparty.main.R;
 import com.hexade.borntoparty.main.models.Users;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;

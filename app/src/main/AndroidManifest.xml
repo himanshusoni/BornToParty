@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".UI.Activities.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -27,45 +27,45 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".BirthdayDetailActivity"
+            android:name=".UI.Activities.BirthdayDetailActivity"
             android:label="@string/title_birthday_detail"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".UI.Activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.hexade.borntoparty.main.MainActivity" />
+                android:value=".UI.Activities.MainActivity" />
         </activity>
         <activity
-            android:name=".ItemListActivity"
+            android:name=".UI.Activities.ItemListActivity"
             android:label="@string/title_item_list"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ItemDetailActivity"
+            android:name=".UI.Activities.ItemDetailActivity"
             android:label="@string/title_item_detail"
-            android:parentActivityName=".ItemListActivity"
+            android:parentActivityName=".UI.Activities.ItemListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.hexade.borntoparty.main.ItemListActivity" />
+                android:value=".UI.Activities.ItemListActivity" />
         </activity>
         <activity
-            android:name=".CreateEventActivity"
+            android:name=".UI.Activities.CreateEventActivity"
             android:label="@string/title_activity_create_event"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".UI.Activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             2
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.hexade.borntoparty.main.MainActivity" />
+                android:value=".UI.Activities.MainActivity" />
         </activity>
         <activity
-            android:name=".EventDetailActivity"
+            android:name=".UI.Activities.EventDetailActivity"
             android:label="@string/title_activity_event_detail"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".UI.Activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.hexade.borntoparty.main.MainActivity" />
+                android:value=".UI.Activities.MainActivity" />
         </activity>
         <activity
             android:name=".LoginActivity"

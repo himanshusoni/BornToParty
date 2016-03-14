@@ -1,4 +1,4 @@
-package com.hexade.borntoparty.main;
+package com.hexade.borntoparty.main.UI.Activities;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -24,6 +24,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.hexade.borntoparty.main.R;
+import com.hexade.borntoparty.main.UI.Fragments.BirthdayDetailFragment;
+import com.hexade.borntoparty.main.UI.Fragments.BirthdayFragment;
+import com.hexade.borntoparty.main.UI.Fragments.EventsFragment;
+import com.hexade.borntoparty.main.UI.Fragments.HomeFragment;
+import com.hexade.borntoparty.main.UI.Fragments.InviteFragment;
 import com.hexade.borntoparty.main.dummy.DummyContent;
 import com.hexade.borntoparty.main.dummy.DummyEvent;
 import com.hexade.borntoparty.main.kinvey.ClientService;

@@ -1,6 +1,7 @@
-package com.hexade.borntoparty.main;
+package com.hexade.borntoparty.main.UI.Fragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
@@ -12,9 +13,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hexade.borntoparty.main.UI.Activities.CreateEventActivity;
+import com.hexade.borntoparty.main.UI.Activities.ItemDetailActivity;
+import com.hexade.borntoparty.main.UI.Activities.ItemListActivity;
+import com.hexade.borntoparty.main.UI.Activities.MainActivity;
+import com.hexade.borntoparty.main.R;
 import com.hexade.borntoparty.main.Utils.DataManager;
-import com.hexade.borntoparty.main.dummy.DummyBirthday;
-import com.hexade.borntoparty.main.dummy.DummyContent;
 import com.hexade.borntoparty.main.models.Users;
 import com.squareup.picasso.Picasso;
 
@@ -75,15 +79,17 @@ public class BirthdayDetailFragment extends Fragment {
             ((TextView) rootView.findViewById(R.id.daysandage)).setText("Turns " + (mItem.getAge()+1) + " in "  + mItem.getDaysLeft() + " days!");
             ((TextView) rootView.findViewById(R.id.phone)).setText(mItem.getPhone()+"\n"+mItem.getCell()+"\n"+mItem.getEmail());
 
-            Button btnSetReminder = (Button) rootView.findViewById(R.id.set_reminder);
-            Button btnSendWishes = (Button) rootView.findViewById(R.id.set_reminder);
+            Button btnPlanParty = (Button) rootView.findViewById(R.id.plan_party);
+            Button btnSendWishes = (Button) rootView.findViewById(R.id.send_wishes);
 
-            btnSetReminder.setOnClickListener(new View.OnClickListener() {
+            btnPlanParty.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    new DataManager(MainActivity.myAppContext).setReminder(mItem.getUsername());
-                    Toast.makeText(getActivity(),"Reminder set for "+mItem.getFullName(),Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getActivity(), CreateEventActivity.class);
+                    intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, mItem.getUsername());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
                 }
             });
         }

@@ -1,4 +1,4 @@
-package com.hexade.borntoparty.main;
+package com.hexade.borntoparty.main.UI.Fragments;
 
 import android.app.Activity;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.hexade.borntoparty.main.UI.Activities.ItemDetailActivity;
+import com.hexade.borntoparty.main.UI.Activities.ItemListActivity;
+import com.hexade.borntoparty.main.R;
 import com.hexade.borntoparty.main.dummy.DummyContent;
 
 /**

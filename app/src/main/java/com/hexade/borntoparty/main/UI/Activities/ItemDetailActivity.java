@@ -1,4 +1,4 @@
-package com.hexade.borntoparty.main;
+package com.hexade.borntoparty.main.UI.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
+
+import com.hexade.borntoparty.main.R;
+import com.hexade.borntoparty.main.UI.Fragments.ItemDetailFragment;
 
 /**
  * An activity representing a single Item detail screen. This

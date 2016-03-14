@@ -1,4 +1,4 @@
-package com.hexade.borntoparty.main;
+package com.hexade.borntoparty.main.UI.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.hexade.borntoparty.main.R;
 
 public class EventDetailActivity extends AppCompatActivity {
 
