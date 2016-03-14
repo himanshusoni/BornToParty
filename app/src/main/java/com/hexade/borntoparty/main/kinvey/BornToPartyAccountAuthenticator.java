@@ -9,7 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.hexade.borntoparty.main.LoginActivity;
+import com.hexade.borntoparty.main.UI.Activities.LoginActivity;
 import com.kinvey.android.Client;
 import com.kinvey.java.User;
 

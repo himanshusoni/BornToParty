@@ -68,11 +68,11 @@
                 android:value=".UI.Activities.MainActivity" />
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".UI.Activities.LoginActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize|stateVisible" />
         <activity
-            android:name=".RegisterAccountActivity"
+            android:name=".UI.Activities.RegisterAccountActivity"
             android:theme="@style/AppTheme"></activity>
 
         <service

@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="center_vertical"
-        tools:context="com.hexade.borntoparty.main.LoginActivity"
+        tools:context=".UI.Activities.LoginActivity"
         android:background="@color/ghost_white"
         android:padding="@dimen/login_activity_padding">
 

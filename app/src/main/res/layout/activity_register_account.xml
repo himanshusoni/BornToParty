@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:context="com.hexade.borntoparty.main.RegisterAccountActivity"
+        tools:context=".UI.Activities.RegisterAccountActivity"
         android:background="@color/ghost_white"
         android:padding="@dimen/login_activity_padding">
 
