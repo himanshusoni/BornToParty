@@ -1,5 +1,7 @@
 package com.hexade.borntoparty.main;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -24,6 +26,7 @@ import android.view.MenuItem;
 
 import com.hexade.borntoparty.main.dummy.DummyContent;
 import com.hexade.borntoparty.main.dummy.DummyEvent;
+import com.hexade.borntoparty.main.kinvey.ClientService;
 import com.hexade.borntoparty.main.models.Users;
 
 public class MainActivity extends AppCompatActivity
@@ -51,16 +54,20 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (!isLoggedIn()) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            return;
+        }
+
         myAppContext = getApplicationContext();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        setTitle("Birthday");
-//         load the first pages - default - birthdayFragment
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.flContent, new HomeFragment()).commit();
-//
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -77,6 +84,13 @@ public class MainActivity extends AppCompatActivity
             // activity should be in two-pane mode.
             mTwoPane = true;
         }
+    }
+
+    private boolean isLoggedIn() {
+        AccountManager am = AccountManager.get(getApplicationContext());
+        Account[] accounts = am.getAccountsByType(ClientService.ACCOUNT_TYPE);
+
+        return accounts.length > 0;
     }
 
     @Override
