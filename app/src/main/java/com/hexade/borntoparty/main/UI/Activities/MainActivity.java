@@ -2,6 +2,8 @@ package com.hexade.borntoparty.main.UI.Activities;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.accounts.AccountManagerCallback;
+import android.accounts.AccountManagerFuture;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -23,6 +25,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.hexade.borntoparty.main.R;
 import com.hexade.borntoparty.main.UI.Fragments.BirthdayDetailFragment;
@@ -33,7 +37,10 @@ import com.hexade.borntoparty.main.UI.Fragments.InviteFragment;
 import com.hexade.borntoparty.main.dummy.DummyContent;
 import com.hexade.borntoparty.main.dummy.DummyEvent;
 import com.hexade.borntoparty.main.kinvey.ClientService;
+import com.hexade.borntoparty.main.models.BornToPartyUser;
 import com.hexade.borntoparty.main.models.Users;
+import com.kinvey.android.AsyncUser;
+import com.kinvey.android.Client;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -47,8 +54,14 @@ public class MainActivity extends AppCompatActivity
      * device.
      */
     private boolean mTwoPane;
+    private boolean isUserInfoSet;
 
     public static Context myAppContext;
+
+    private Client kinveyClient;
+
+    // UI references
+    private NavigationView navigationView;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -59,6 +72,10 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        isUserInfoSet = false;
+
+        // get kinveyClient
+        this.kinveyClient = ((ClientService) getApplication()).getKinveyService();
 
         if (!isLoggedIn()) {
             Intent intent = new Intent(this, LoginActivity.class);
@@ -76,11 +93,20 @@ public class MainActivity extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                if (slideOffset != 0)
+                    setUserInfo();
+
+                super.onDrawerSlide(drawerView, slideOffset);
+            }
+        };
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         if (findViewById(R.id.item_detail_container) != null) {
@@ -92,11 +118,36 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    // set username and full name in nav header;
+    private void setUserInfo() {
+        if (isUserInfoSet)
+            return;
+
+        AsyncUser user = kinveyClient.user();
+        String firstName = (String) user.get(BornToPartyUser.KEY_FIRST_NAME);
+        String lastName = (String) user.get(BornToPartyUser.KEY_LAST_NAME);
+
+        View headerView = navigationView.getHeaderView(0);
+
+        if (firstName != null && lastName !=null) {
+            String userFullName = firstName.toString() + " " + lastName.toString();
+            TextView fullNameTV = (TextView) headerView.findViewById(R.id.tv_nav_header_full_name);
+            fullNameTV.setText(userFullName);
+            isUserInfoSet = true;
+        }
+
+        if (user.getUsername() != null) {
+            String username = "@" + user.getUsername();
+            TextView usernameTV = (TextView) headerView.findViewById(R.id.tv_nav_header_username);
+            usernameTV.setText(username);
+        }
+    }
+
     private boolean isLoggedIn() {
         AccountManager am = AccountManager.get(getApplicationContext());
         Account[] accounts = am.getAccountsByType(ClientService.ACCOUNT_TYPE);
 
-        return accounts.length > 0;
+        return accounts.length > 0 && kinveyClient.user().isUserLoggedIn();
     }
 
     @Override
@@ -166,6 +217,8 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_settings:
                 // TODO open a new Activity
                 break;*/
+            case R.id.nav_logout:
+                logOut();
             default:
                 fragmentClass = HomeFragment.class;
         }
@@ -262,6 +315,32 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    public void logOut() {
+        /*
+         * TODO: Log out is not an essentaial feature. Can be removed later
+         * Keeping this here as a debugging and testing purposes
+         * Need a better implementation to push this feature to production
+         */
+        kinveyClient.user().logout().execute();
+
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+
+        /*
+        // remove account from AccountManager
+        AccountManager am = AccountManager.get(getApplicationContext());
+        Account[] accounts = am.getAccountsByType(ClientService.ACCOUNT_TYPE);
+        if (accounts.length > 0)
+            am.removeAccount(accounts[0], null, new AccountManagerCallback<Bundle>() {
+                @Override
+                public void run(AccountManagerFuture<Bundle> future) {
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
+            }, null);
+        */
     }
 
 /*    private void setupViewPager(ViewPager viewPager) {
