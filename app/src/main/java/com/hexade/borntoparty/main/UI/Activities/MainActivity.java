@@ -41,8 +41,6 @@ import com.hexade.borntoparty.main.dummy.DummyEvent;
 import com.hexade.borntoparty.main.kinvey.ClientService;
 import com.hexade.borntoparty.main.models.BornToPartyUser;
 import com.hexade.borntoparty.main.models.Friends;
-import com.hexade.borntoparty.main.models.User;
-import com.hexade.borntoparty.main.models.Users;
 import com.kinvey.android.AsyncUser;
 import com.kinvey.android.Client;
 
