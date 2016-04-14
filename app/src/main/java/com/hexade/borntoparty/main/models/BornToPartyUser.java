@@ -49,6 +49,9 @@ public class BornToPartyUser extends GenericJson{
     public int age;
     public Date dateOfBirth;
 
+    @Key
+    public String[] friends;
+
     public BornToPartyUser(){
 
     }
@@ -188,6 +191,14 @@ public class BornToPartyUser extends GenericJson{
 
     public Date getDateOfBirth(){
         return dateOfBirth;
+    }
+
+    public String[] getFriends() {
+        return friends;
+    }
+
+    public void setFriends(String[] friends) {
+        this.friends = friends;
     }
 
     public static class Name extends GenericJson{

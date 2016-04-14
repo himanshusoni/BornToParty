@@ -1,6 +1,8 @@
 package com.hexade.borntoparty.main.UI.Activities;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,14 +19,20 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.api.client.json.GenericJson;
+import com.google.gson.Gson;
 import com.hexade.borntoparty.main.R;
 import com.hexade.borntoparty.main.models.BornToPartyUser;
 import com.hexade.borntoparty.main.models.Friends;
 import com.kinvey.android.AsyncAppData;
+import com.kinvey.android.AsyncCustomEndpoints;
 import com.kinvey.android.Client;
 import com.kinvey.android.callback.KinveyListCallback;
 import com.kinvey.java.Query;
+import com.kinvey.java.core.KinveyClientCallback;
 import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
 
 public class AddFriendActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -40,6 +48,9 @@ public class AddFriendActivity extends AppCompatActivity implements View.OnClick
     BornToPartyUser searchUser;
 
     Context context;
+
+    final Client mKinveyClient = MainActivity.kinveyClient;
+    private String uname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +68,7 @@ public class AddFriendActivity extends AppCompatActivity implements View.OnClick
         confirmButton = (Button) findViewById(R.id.btn_confirm);
         addButton = (Button) findViewById(R.id.btn_add);
         addButton.setOnClickListener(this);
+        confirmButton.setOnClickListener(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -107,13 +119,11 @@ public class AddFriendActivity extends AppCompatActivity implements View.OnClick
     }
 
     public void searchUser(){
-        String uname = username.getText().toString().trim();
+        uname = username.getText().toString().trim();
         if(!uname.equals("")){
 
             // TODO clear focus not working.
             username.clearFocus();
-
-            final Client mKinveyClient = MainActivity.kinveyClient;
 
             Query myQuery = mKinveyClient.query();
 
@@ -138,6 +148,8 @@ public class AddFriendActivity extends AppCompatActivity implements View.OnClick
                         Picasso.with(context).load(searchUser.getPicture().getThumbnail()).skipMemoryCache().into(mThumbnail);
 
                         // Show Confirm button
+                        confirmButton.setVisibility(View.VISIBLE);
+//                        addButton.setVisibility(View.GONE);
                     }else{
                         searchUsername.setText(" Not Found !!");
 
@@ -158,5 +170,68 @@ public class AddFriendActivity extends AppCompatActivity implements View.OnClick
 
     public void confirmAddUser(){
         // TODO add searchUser as a friend
+
+        GenericJson myInput = new GenericJson();
+        myInput.put("username", MainActivity.loggedInUser.getUsername());
+        myInput.put("friendname", uname);
+
+        AsyncCustomEndpoints endpoints = mKinveyClient.customEndpoints();
+        endpoints.callEndpoint("addFriend", myInput, new KinveyClientCallback<GenericJson>() {
+            @Override
+            public void onSuccess(GenericJson result) {
+                //endpoint code run successfully
+
+//                Toast.makeText(getApplicationContext(), "SUCCESS " + result.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "SUCCESS - Added friend", Toast.LENGTH_SHORT).show();
+
+                hideProgress();
+                confirmButton.setVisibility(View.GONE);
+            }
+            @Override
+            public void onFailure(Throwable error) {
+                //something went wrong!
+
+                error.printStackTrace();
+//                Toast.makeText(getApplicationContext(), "ERROR" + error.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "ERROR - Already a friend.", Toast.LENGTH_SHORT).show();
+
+                hideProgress();
+            }
+        });
+
+        /*Query query1 = new Query().equals("username", uname);
+        Query query2 = new Query().equals("username", MainActivity.loggedInUser.getUsername());
+
+        AsyncAppData<BornToPartyUser> myUser = mKinveyClient.appData("friends", BornToPartyUser.class);
+        myUser.get(query1.or(query2),new KinveyListCallback<BornToPartyUser>() {
+            @Override
+            public void onSuccess(BornToPartyUser[] resultList) {
+                BornToPartyUser loggedInUser;
+                BornToPartyUser friend;
+                Log.v("TAG", "received " + resultList.length);
+                if (resultList.length == 2) {
+                    if(resultList[0].getUsername().equals(uname))
+                    {
+                        friend = resultList[0];
+                        loggedInUser = resultList[1];
+                    }else{
+                        friend = resultList[1];
+                        loggedInUser = resultList[0];
+                    }
+                    Log.i("ADD FRIENDS RESULT ", friend.getUsername() + " my friends" + friend.getFriends());
+                    Log.i("ADD FRIENDS RESULT ", loggedInUser.getUsername() + " my friends" + loggedInUser.getFriends());
+                } else {
+                    Log.v("TAG", "result less than 2 " + resultList.length);
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onFailure(Throwable throwable) {
+                Toast.makeText(getApplicationContext(), "Add Friend Failed : " + throwable.getMessage(),
+                        Toast.LENGTH_LONG).show();
+            }
+        });*/
     }
 }

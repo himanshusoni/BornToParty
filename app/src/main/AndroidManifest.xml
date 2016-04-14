@@ -89,7 +89,11 @@
         <activity
             android:name=".UI.Activities.AddFriendActivity"
             android:label="@string/title_activity_add_friend"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UI.Activities.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

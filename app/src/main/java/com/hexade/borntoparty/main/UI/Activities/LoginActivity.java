@@ -18,8 +18,11 @@ import com.google.gson.Gson;
 import com.hexade.borntoparty.main.R;
 import com.hexade.borntoparty.main.kinvey.ClientService;
 import com.hexade.borntoparty.main.models.BornToPartyUser;
+import com.hexade.borntoparty.main.models.Friends;
 import com.kinvey.android.AsyncAppData;
 import com.kinvey.android.Client;
+import com.kinvey.android.callback.KinveyListCallback;
+import com.kinvey.java.Query;
 import com.kinvey.java.User;
 import com.kinvey.java.core.KinveyCancellableCallback;
 import com.kinvey.java.core.KinveyClientCallback;
@@ -92,11 +95,22 @@ public class LoginActivity extends AccountAuthenticatorActivity {
 
                         BornToPartyUser user1 = new BornToPartyUser();
 
+                        // TODO issue with the id for usermaster. Need to be same as users. So using query instead of entity
+
+                        Query myQuery = kinveyClient.query();
+                        myQuery.equals("username", user.getUsername());
                         AsyncAppData<BornToPartyUser> myUser = kinveyClient.appData("usersmaster", BornToPartyUser.class);
-                        myUser.getEntity(user.getId(), new KinveyClientCallback<BornToPartyUser>() {
+//                        myUser.getEntity(user.getId(), new KinveyClientCallback<BornToPartyUser>() {
+                        myUser.get(myQuery, new KinveyListCallback<BornToPartyUser>() {
                             @Override
-                            public void onSuccess(BornToPartyUser result) {
-                                Log.v("TAG", "received " + result.getId());
+                            public void onSuccess(BornToPartyUser[] resultList) {
+                                BornToPartyUser result;
+                                Log.v("TAG", "received " + resultList.length);
+                                if(resultList.length > 0){
+                                    result = resultList[0];
+                                }else {
+                                    return;
+                                }
 
                                 MainActivity.setLoggedInUser(result);
                                 SharedPreferences mPrefs = getPreferences(MODE_PRIVATE);
