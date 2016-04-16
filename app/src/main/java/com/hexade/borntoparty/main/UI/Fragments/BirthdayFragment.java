@@ -90,41 +90,12 @@ public class BirthdayFragment extends Fragment {
             recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
             Log.i("API", "In BirthdayFragment, onCreateView");
 
-            /*final Users users = new Users();
-            users.fetch(Users.URL, new Callback() {
-                @Override
-                public void onFailure(Request request, IOException e) {
-
-                }
-
-                @Override
-                public void onResponse(Response response) throws IOException {
-                    final String responseString = response.body().string();
-                    if (response.isSuccessful()) {
-                        // Do what you want to do with the response.
-                        Log.i("API - SUCCESS", responseString);
-
-                        // Always run the View update on the main/UI Thread
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                recyclerView.setAdapter(new MyBirthdayRecyclerViewAdapter(getActivity(), users.createUsers(responseString), mListener));
-                            }
-                        });
-
-                    } else {
-                        // Request not successful
-                        Log.i("API - ERROR", responseString);
-                    }
-                }
-            });*/
-
             final Client mKinveyClient = MainActivity.kinveyClient;
 
             final BornToPartyUser friends = new BornToPartyUser();
             Query myQuery = mKinveyClient.query();
 
-            myQuery.equals("username", "crazysnake682");//MainActivity.loggedInUser.getUsername());
+            myQuery.equals("username", MainActivity.loggedInUser.getUsername());//MainActivity.loggedInUser.getUsername());
             final AsyncAppData<Friends> myFriends = mKinveyClient.appData("friends", Friends.class);
             myFriends.get(myQuery, new KinveyListCallback<Friends>() {
                 @Override
