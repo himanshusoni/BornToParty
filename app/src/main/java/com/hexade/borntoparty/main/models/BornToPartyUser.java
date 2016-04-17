@@ -109,6 +109,7 @@ public class BornToPartyUser extends GenericJson{
     }
 
     public void setDob(String da) {
+        this.dob = da;
         Date dob = new Date();
 
         SimpleDateFormat sdfmt1 = new SimpleDateFormat("MMM dd, yyyy");

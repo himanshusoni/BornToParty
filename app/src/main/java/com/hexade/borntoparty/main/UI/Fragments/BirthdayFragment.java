@@ -17,6 +17,7 @@ import com.hexade.borntoparty.main.R;
 import com.hexade.borntoparty.main.UI.Activities.MainActivity;
 import com.hexade.borntoparty.main.models.BornToPartyUser;
 import com.hexade.borntoparty.main.models.Friends;
+import com.hexade.borntoparty.main.models.Store;
 import com.hexade.borntoparty.main.models.Users;
 import com.kinvey.android.AsyncAppData;
 import com.kinvey.android.AsyncUser;
@@ -136,6 +137,7 @@ public class BirthdayFragment extends Fragment {
                                     }
 
                                     myFriends.setFriendsList(friendList);
+                                    Store.friendsList = friendList;
 
                                     recyclerView.setAdapter(new MyBirthdayRecyclerViewAdapter(getActivity(), friendList, mListener));
                                 }

@@ -311,6 +311,7 @@ public class MainActivity extends AppCompatActivity
         } else {*/
             Context context = getApplicationContext();
             Intent intent = new Intent(context, EventDetailActivity.class);
+            intent.putExtra(BirthdayDetailFragment.ARG_ITEM_ID, item.get_id());
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             context.startActivity(intent);
@@ -321,7 +322,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onInviteListFragmentInteraction(DummyContent.DummyItem item) {
         DialogFragment reminderDialogFragment = new DialogFragment() {
-            public String[] inviteActions =  new String[]{"Yes","No","May be","Later"};
+            public String[] inviteActions =  new String[]{"Coming","May be","Not Coming"};
 
             @Override
             public Dialog onCreateDialog(Bundle savedInstanceState) {

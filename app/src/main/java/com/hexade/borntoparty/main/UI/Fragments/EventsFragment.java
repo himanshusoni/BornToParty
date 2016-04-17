@@ -23,6 +23,7 @@ import com.hexade.borntoparty.main.models.BornToPartyUser;
 import com.hexade.borntoparty.main.models.Event;
 import com.hexade.borntoparty.main.models.EventUsers;
 import com.hexade.borntoparty.main.models.Friends;
+import com.hexade.borntoparty.main.models.Store;
 import com.kinvey.android.AsyncAppData;
 import com.kinvey.android.AsyncCustomEndpoints;
 import com.kinvey.android.AsyncUser;
@@ -107,8 +108,10 @@ public class EventsFragment extends Fragment {
                     if(results.length > 0){
                         Log.i("RESULT",results[0].getUsername());
                         Log.i("RESULT",results[0].getEvents().toString());
+                        ArrayList<Event> eventList = results[0].getEvents();
+                        Store.eventList = eventList;
 
-                        recyclerView.setAdapter(new MyEventsRecyclerViewAdapter(results[0].getEvents(), mListener));
+                        recyclerView.setAdapter(new MyEventsRecyclerViewAdapter(eventList, mListener));
                     }
                 }
 

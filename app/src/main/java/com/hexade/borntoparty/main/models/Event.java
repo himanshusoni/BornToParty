@@ -17,7 +17,7 @@ public class Event extends GenericJson {
 
     @Key("_id")
     private String _id;
-    @Key
+    @Key("name")
     private String eventName;
     @Key
     private String forUser;
@@ -28,13 +28,21 @@ public class Event extends GenericJson {
     @Key
     private String location;
     @Key
-    private String[] invites;
+    private ArrayList<String> invites;
     @Key
     private HashMap<String,String> inviteStatus;
     @Key
     private ArrayList<String> activities;
     @Key
     private String eventDate;
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
 
     public String getEventName() {
         return eventName;
@@ -76,11 +84,11 @@ public class Event extends GenericJson {
         this.location = location;
     }
 
-    public String[] getInvites() {
+    public ArrayList<String> getInvites() {
         return invites;
     }
 
-    public void setInvites(String[] invites) {
+    public void setInvites(ArrayList<String> invites) {
         this.invites = invites;
     }
 
