@@ -30,6 +30,7 @@
         <activity
             android:name=".UI.Activities.BirthdayDetailActivity"
             android:label="@string/title_birthday_detail"
+            android:launchMode="singleTop"
             android:parentActivityName=".UI.Activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -56,7 +57,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".UI.Activities.MainActivity" />
+                android:value=".UI.Activities.BirthdayDetailActivity" />
         </activity>
         <activity
             android:name=".UI.Activities.EventDetailActivity"

@@ -93,7 +93,7 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
             }
 
             myFriends = friendsList;
-            selectedFriends = new boolean[myFriends.size()];
+            selectedFriends = new boolean[myFriends.size() - 1];
 
             if(mItem!=null){
                 event_header.setText(mItem.getName().getFirst() + "'s Birthday on " + mItem.getFormattedDob());
@@ -129,11 +129,12 @@ public class CreateEventActivity extends AppCompatActivity implements View.OnCli
     public void showInviteFriendsDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        CharSequence[] friendsNames = new CharSequence[myFriends.size()];
-        for(int i = 0; i < friendsNames.length; i++){
+        CharSequence[] friendsNames = new CharSequence[myFriends.size() - 1];
+        int j = 0;
+        for(int i = 0; i < myFriends.size(); i++){
             if(myFriends.get(i) == mItem)
                 continue;
-            friendsNames[i] = myFriends.get(i).getName().getFullName();
+            friendsNames[j++] = myFriends.get(i).getName().getFullName();
         }
 
         builder.setTitle("Select Friends")

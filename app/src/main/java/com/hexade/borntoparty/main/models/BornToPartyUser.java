@@ -239,7 +239,7 @@ public class BornToPartyUser extends GenericJson{
         }
 
         public String getFullName(){
-            return first + " " + last;
+            return first.substring(0, 1).toUpperCase() + first.substring(1) + " " + last.substring(0, 1).toUpperCase() + last.substring(1);
         }
     }
 
